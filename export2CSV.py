@@ -1,5 +1,5 @@
 #Source: https://www.learnrobotics.org/blog/arduino-data-logger-csv/
-#modifed by Bodhi-san
+#modifed by Bodhi Setiawan
 import serial
 import time
 import csv
@@ -13,7 +13,7 @@ sensor_data = [] #store data
 
 arduino_port = "/dev/ttyACM0" #serial port pada Arduino
 baud = 115200 #atur baudrate
-fileName="alpha0.05.xlsx" #kore wa kimi no data file, ganti nama file kamu...iyaa kamuu
+fileName="alpha0.09.csv" #nama file
 
 ser = serial.Serial(arduino_port, baud)
 print("Connected to Arduino port:" + arduino_port)
@@ -34,6 +34,7 @@ print(sensor_data)
 
 # mengambil sampel
 while line <= samples:
+    time.sleep(0.01)
     getData=ser.readline()
     dataString = getData.decode('utf-8')
     data=dataString[0:][:-2]
@@ -47,25 +48,11 @@ while line <= samples:
 
     line = line+1
    
-
-    
-
 # membuat file CSV (format file bisa diganti ke xlsx di bagian nama file)
 with open(fileName, 'w', encoding='UTF8', newline='') as f:
     writer = csv.writer(f)
     writer.writerow(list_collumn)
-    time.sleep(2)
     writer.writerows(sensor_data)
-
-xs = [i / 5.0 for i in range(0,100)]
-xnf = [float(readings[0])]
-xf = [float(readings[1])]
-
-fig, ax = plt.subplots()
-
-ax.plot(xs, xnf)
-ax.plot(xs, xf)
-plt.show()
 
 print("Data collection complete!")
 file.close()

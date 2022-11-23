@@ -1,96 +1,26 @@
-import serial
+import pandas as pd
 import matplotlib.pyplot as plt
-import numpy as np
 
-connected = False
+plt.rcParams["figure.figsize"] = [7.50, 3.50]
+plt.rcParams["figure.autolayout"] = True
 
-comPort = '/dev/ttyACM0'        
+headers = ['xnf', 'xf']
 
-ser = serial.Serial(comPort, 115200)    # Sets up serial connection (make sure baud rate is correct - matches Arduino)
+df = pd.read_csv('alpha0.001.csv')
+df2 = df.tail(df.shape[0] -7)
+print(df2)
 
-while not connected:
-    serin = ser.read()
-    connected = True
+xnf = df2['xnf']
+xf = df2['xf']
+val = []
 
-plt.ion()                               # Sets plot to animation mode
+for i in range(7,107):
+    val.append(i)
 
-fig1 = plt.figure()
-fig2 = plt.figure()
-fig3 = plt.figure()
-fig4 = plt.figure()
+plt.plot(val, xnf, label= "xnf")
+plt.plot(val, xf, label= "xf")
+plt.plot(val,90)
 
-ax1 = fig1.add_subplot(111)
-ax2 = fig2.add_subplot(111)
-ax3 = fig3.add_subplot(111)
-ax4 = fig4.add_subplot(111)
+plt.legend(['xnf','xf'], prop={'size': 10})
 
-length = 20                             # Determines length of data taking session (in data points); length/10 = seconds
-
-w = [0]*length                          # Create empty variable of length of test
-x = [0]*length               
-y = [0]*length
-z = [0]*length
-
-wline, = ax1.plot(w)                    # Sets up future lines to be modified
-xline, = ax2.plot(x)                    
-yline, = ax3.plot(y)
-zline, = ax4.plot(z)
-
-ax1.set_ylim(0,64535)                       # Sets the y axis limits - 16 bits resolution
-ax2.set_ylim(0,64535)
-ax3.set_ylim(0,64535)
-ax4.set_ylim(0,64535)
-
-for i in range(length):                 # While you are taking data
-    data = ser.readline()               # Reads until it gets a carriage return (/n).
-    sep = data.split(",")                  # Splits string into a list at the tabs
-
-    w.append(int(sep[0]))               # Add new values as int to current list
-    x.append(int(sep[1]))   
-    y.append(int(sep[2]))
-    z.append(int(sep[3]))
-
-    del w[0]
-    del x[0]
-    del y[0]
-    del z[0]
-
-    wline.set_xdata(np.arange(len(w)))  # Sets wdata to new list length  
-    xline.set_xdata(np.arange(len(x)))  
-    yline.set_xdata(np.arange(len(y)))  
-    zline.set_xdata(np.arange(len(z)))  
-
-    wline.set_ydata(w)                  # Sets ydata to new lists 
-    xline.set_ydata(x)                 
-    yline.set_ydata(y)
-    zline.set_ydata(z)
-
-    print(i)
-    print(sep)
-
-    
-#    ax1.plot(sep[0])
-    ax1.pause(0.001)
-    ax1.grid(True)                   
-    fig1.canvas.draw()# Draws new plot
-    fig1.canvas.savefig('a.png')
-
-    
-    ax2.pause(0.001)                   
-    ax2.grid(True)
-    fig2.canvas.draw()                    # Draws new plot
-
-   
-    ax3.pause(0.001)                   
-    ax3.grid(True)
-    fig3.canvas.draw()                        # Draws new plot
-
-    
-    ax4.pause(0.001)                   
-    ax4.grid(True)
-    fig4.canvas.draw()                      # Draws new plot
-
-plt.savefig('a.png')
 plt.show()
-
-ser.close()     

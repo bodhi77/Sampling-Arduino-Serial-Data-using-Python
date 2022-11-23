@@ -4,7 +4,7 @@ int16_t AcX, AcY, AcZ, Tmp, GyX, GyY, GyZ;
 int minVal = 265;
 int maxVal = 402;
 double sdtX = 0, sdtY = 0, sdtZ = 0;
-float alpha=0.05;
+float alpha=0.09;
 double xf, xnf;
 double yf, ynf;
 double zf, znf;
@@ -45,15 +45,15 @@ zf= RAD_TO_DEG * (atan2(-sdtY, - sdtX) + PI);
 
   Serial.print(xnf);
   Serial.print(",");
-  Serial.println(xf);
-//  Serial.print(",");
-//  Serial.print(ynf);
-//  Serial.print(",");
-//  Serial.print(yf);
-//  Serial.print(",");
-//  Serial.print(znf);
-//  Serial.print(",");
-//  Serial.println(zf);
+  Serial.print(xf);
+  Serial.print(",");
+  Serial.print(ynf);
+  Serial.print(",");
+  Serial.print(yf);
+  Serial.print(",");
+  Serial.print(znf);
+  Serial.print(",");
+  Serial.println(zf);
   delay(10);
 
 }
