@@ -1,1 +1,1 @@
-# Sampling-Arduino-Serial-Data-using-Python
+# Sampling-and-Plotting-Arduino-Serial-Data-using-Python
