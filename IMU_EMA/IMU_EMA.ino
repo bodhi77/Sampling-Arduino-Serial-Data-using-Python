@@ -4,7 +4,7 @@ int16_t AcX, AcY, AcZ, Tmp, GyX, GyY, GyZ;
 int minVal = 265;
 int maxVal = 402;
 double sdtX = 0, sdtY = 0, sdtZ = 0;
-float alpha=0.09;
+float alpha=0.9;
 double xf, xnf;
 double yf, ynf;
 double zf, znf;

@@ -6,7 +6,7 @@ plt.rcParams["figure.autolayout"] = True
 
 n = 50
 vxz = 90
-vy = 360
+vy = 0
 spxz = [vxz]*n
 spy = [vy]*n
 

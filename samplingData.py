@@ -13,7 +13,7 @@ sensor_data = [] #store data
 
 arduino_port = "/dev/ttyACM0" #serial port pada Arduino
 baud = 115200 #atur baudrate
-fileName="alpha0.09.csv" #nama file
+fileName="alpha0.9.csv" #nama file
 
 ser = serial.Serial(arduino_port, baud)
 print("Connected to Arduino port:" + arduino_port)
@@ -21,6 +21,7 @@ file = open(fileName, "a")
 print("Created file")
 
 #menampilkan data ke terminal
+
 getData=ser.readline()
 dataString = getData.decode('utf-8')
 data=dataString[0:][:-2]
@@ -34,7 +35,6 @@ print(sensor_data)
 
 # mengambil sampel
 while line <= samples:
-    time.sleep(0.01)
     getData=ser.readline()
     dataString = getData.decode('utf-8')
     data=dataString[0:][:-2]
@@ -47,6 +47,7 @@ while line <= samples:
     print(sensor_data)
 
     line = line+1
+    time.sleep(0.01)
    
 # membuat file CSV (format file bisa diganti ke xlsx di bagian nama file)
 with open(fileName, 'w', encoding='UTF8', newline='') as f:
